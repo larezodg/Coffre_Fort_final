@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250" width="100%" height="100%">
+  <defs>
+    <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E88E5" />
+      <stop offset="100%" stop-color="#1565C0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Fond circulaire -->
+  <circle cx="125" cy="125" r="120" fill="url(#iconGradient)" />
+
+  <!-- Icône Cœur -->
+  <g transform="translate(125, 88) scale(1.6)">
+    <path 
+      d="M 0 12 C -8 -10, -36 -10, -36 14 C -36 34, -14 52, 0 66 C 14 52, 36 34, 36 14 C 36 -10, 8 -10, 0 12 Z" 
+      fill="none" 
+      stroke="#FFFFFF" 
+      stroke-width="6" 
+      stroke-linecap="round" 
+      stroke-linejoin="round" 
+    />
+  </g>
+</svg>

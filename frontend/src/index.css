@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 215 25% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 15%;
+
+    --primary: 210 80% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 200 25% 94%;
+    --secondary-foreground: 215 25% 25%;
+
+    --muted: 210 15% 95%;
+    --muted-foreground: 215 10% 50%;
+
+    --accent: 170 60% 42%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 145 63% 42%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    --info: 200 80% 50%;
+    --info-foreground: 0 0% 100%;
+
+    --border: 214 20% 90%;
+    --input: 214 20% 90%;
+    --ring: 210 80% 45%;
+
+    --radius: 0.625rem;
+
+    --sidebar-background: 215 25% 15%;
+    --sidebar-foreground: 210 15% 85%;
+    --sidebar-primary: 210 80% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 215 20% 22%;
+    --sidebar-accent-foreground: 210 15% 90%;
+    --sidebar-border: 215 20% 25%;
+    --sidebar-ring: 210 80% 55%;
+
+    --medical-gradient: linear-gradient(135deg, hsl(210 80% 45%), hsl(195 80% 40%));
+    --medical-gradient-subtle: linear-gradient(135deg, hsl(210 80% 45% / 0.08), hsl(195 80% 40% / 0.05));
+    --shadow-card: 0 1px 3px hsl(215 25% 15% / 0.06), 0 1px 2px hsl(215 25% 15% / 0.04);
+    --shadow-elevated: 0 10px 25px -5px hsl(215 25% 15% / 0.08), 0 8px 10px -6px hsl(215 25% 15% / 0.04);
+  }
+
+  .dark {
+    --background: 215 25% 10%;
+    --foreground: 210 15% 90%;
+    --card: 215 25% 13%;
+    --card-foreground: 210 15% 90%;
+    --popover: 215 25% 13%;
+    --popover-foreground: 210 15% 90%;
+    --primary: 210 80% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 215 20% 20%;
+    --secondary-foreground: 210 15% 85%;
+    --muted: 215 20% 18%;
+    --muted-foreground: 215 10% 55%;
+    --accent: 170 60% 45%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 215 20% 22%;
+    --input: 215 20% 22%;
+    --ring: 210 80% 55%;
+    --sidebar-background: 215 25% 8%;
+    --sidebar-foreground: 210 15% 85%;
+    --sidebar-primary: 210 80% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 215 20% 15%;
+    --sidebar-accent-foreground: 210 15% 90%;
+    --sidebar-border: 215 20% 18%;
+    --sidebar-ring: 210 80% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  h1, h2, h3 {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+  }
+}
+
+@layer components {
+  .medical-card {
+    @apply bg-card rounded-xl border border-border p-6;
+    box-shadow: var(--shadow-card);
+  }
+  .medical-card-elevated {
+    @apply bg-card rounded-xl border border-border p-6;
+    box-shadow: var(--shadow-elevated);
+  }
+  .stat-card {
+    @apply medical-card flex flex-col gap-2 transition-all duration-200 hover:shadow-lg;
+  }
+  .medical-gradient-bg {
+    background: var(--medical-gradient);
+  }
+  .medical-gradient-subtle {
+    background: var(--medical-gradient-subtle);
+  }
+  .medical-table {
+    @apply w-full text-sm;
+  }
+  .medical-table th {
+    @apply text-left text-muted-foreground font-medium py-3 px-4 border-b border-border bg-muted/50;
+  }
+  .medical-table td {
+    @apply py-3 px-4 border-b border-border;
+  }
+  .medical-table tr:hover td {
+    @apply bg-muted/30;
+  }
+  .medical-input {
+    @apply w-full rounded-lg border border-input bg-background px-4 py-2.5 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-ring/30 focus:border-primary;
+  }
+  .medical-btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-medium text-primary-foreground transition-all duration-200 hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-ring/40 disabled:opacity-50;
+    background: var(--medical-gradient);
+  }
+  .medical-btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-all duration-200 hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring/40;
+  }
+  .medical-btn-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-destructive px-5 py-2.5 text-sm font-medium text-destructive-foreground transition-all duration-200 hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-destructive/40;
+  }
+  .medical-badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+  .medical-badge-success {
+    @apply medical-badge bg-success/10 text-success;
+  }
+  .medical-badge-warning {
+    @apply medical-badge bg-warning/10 text-warning;
+  }
+  .medical-badge-danger {
+    @apply medical-badge bg-destructive/10 text-destructive;
+  }
+  .medical-badge-info {
+    @apply medical-badge bg-info/10 text-info;
+  }
+  .sidebar-link {
+    @apply flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-sidebar-foreground/70 transition-all duration-150 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground;
+  }
+  .sidebar-link-active {
+    @apply sidebar-link bg-sidebar-accent text-sidebar-primary font-medium;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
