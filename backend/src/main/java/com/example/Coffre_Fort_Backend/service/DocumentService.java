@@ -90,7 +90,7 @@ public class DocumentService {
                 .patient(patient)
                 .uploadedBy(uploader)
                 .fileName(file.getOriginalFilename())
-                .documentType(Document.DocumentType.valueOf(docType.replace("-", "_")))
+                .documentType(Document.DocumentType.fromString(docType))
                 .description(description)
                 .storagePath(s3ObjectKey) // On stocke la clé S3 dans storagePath
                 .fileSize(file.getSize())
