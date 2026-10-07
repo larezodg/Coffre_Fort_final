@@ -7,15 +7,20 @@ import com.example.Coffre_Fort_Backend.exception.*;
 import com.example.Coffre_Fort_Backend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.core.ResponseBytes;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.*;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -29,9 +34,10 @@ public class DocumentService {
     private final UserRepository userRepository;
     private final DocumentViewRepository documentViewRepository;
     private final AuditService auditService;
+    private final S3Client s3Client;
 
-    @Value("${app.upload.dir}")
-    private String uploadDir;
+    @Value("${aws.s3.bucket-name}")
+    private String bucketName;
 
     // ---------- Liste ----------
 
@@ -54,7 +60,7 @@ public class DocumentService {
 
     @Transactional
     public DocumentResponse upload(MultipartFile file, Long patientId, String docType,
-                                    String description, Long uploaderId, String username, String ip) throws IOException {
+                                   String description, Long uploaderId, String username, String ip) throws IOException {
         User uploader = userRepository.findById(uploaderId)
                 .orElseThrow(() -> new ResourceNotFoundException("Utilisateur introuvable"));
 
@@ -67,12 +73,18 @@ public class DocumentService {
                     .orElseThrow(() -> new ResourceNotFoundException("Patient introuvable"));
         }
 
-        // Sauvegarder le fichier
-        Path dir = Paths.get(uploadDir, "patient_" + patientId);
-        Files.createDirectories(dir);
-        String storedName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-        Path storagePath = dir.resolve(storedName);
-        Files.copy(file.getInputStream(), storagePath, StandardCopyOption.REPLACE_EXISTING);
+        // Définir la clé d'objet dans le Bucket R2 (ex: patients/patient_1/uuid_nom.pdf)
+        String s3ObjectKey = "patients/patient_" + patientId + "/" + UUID.randomUUID() + "_" + file.getOriginalFilename();
+
+        // Envoyer le fichier sur Cloudflare R2
+        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                .bucket(bucketName)
+                .key(s3ObjectKey)
+                .contentType(file.getContentType())
+                .contentLength(file.getSize())
+                .build();
+
+        s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
 
         Document doc = Document.builder()
                 .patient(patient)
@@ -80,7 +92,7 @@ public class DocumentService {
                 .fileName(file.getOriginalFilename())
                 .documentType(Document.DocumentType.valueOf(docType.replace("-", "_")))
                 .description(description)
-                .storagePath(storagePath.toString())
+                .storagePath(s3ObjectKey) // On stocke la clé S3 dans storagePath
                 .fileSize(file.getSize())
                 .mimeType(file.getContentType())
                 .encrypted(true)
@@ -105,12 +117,18 @@ public class DocumentService {
         auditService.logSuccess(userId, username, "DOCUMENT_DOWNLOAD", "document:" + documentId, ip);
 
         try {
-            Path path = Paths.get(doc.getStoragePath());
-            Resource resource = new UrlResource(path.toUri());
+            GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(doc.getStoragePath())
+                    .build();
+
+            ResponseBytes<GetObjectResponse> objectBytes = s3Client.getObjectAsBytes(getObjectRequest);
+            Resource resource = new ByteArrayResource(objectBytes.asByteArray());
+
             return Map.of("resource", resource, "fileName", doc.getFileName(),
                     "mimeType", doc.getMimeType() != null ? doc.getMimeType() : "application/octet-stream");
-        } catch (MalformedURLException e) {
-            throw new ResourceNotFoundException("Fichier introuvable sur le disque");
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("Fichier introuvable sur le stockage Cloud R2");
         }
     }
 
@@ -132,12 +150,18 @@ public class DocumentService {
         auditService.logSuccess(userId, username, "DOCUMENT_VIEW", "document:" + documentId, ip);
 
         try {
-            Path path = Paths.get(doc.getStoragePath());
-            Resource resource = new UrlResource(path.toUri());
+            GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(doc.getStoragePath())
+                    .build();
+
+            ResponseBytes<GetObjectResponse> objectBytes = s3Client.getObjectAsBytes(getObjectRequest);
+            Resource resource = new ByteArrayResource(objectBytes.asByteArray());
+
             return Map.of("resource", resource, "fileName", doc.getFileName(),
                     "mimeType", doc.getMimeType() != null ? doc.getMimeType() : "application/octet-stream");
-        } catch (MalformedURLException e) {
-            throw new ResourceNotFoundException("Fichier introuvable");
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("Fichier introuvable sur le stockage Cloud R2");
         }
     }
 
@@ -149,9 +173,13 @@ public class DocumentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Document introuvable ou accès refusé"));
 
         try {
-            Files.deleteIfExists(Paths.get(doc.getStoragePath()));
-        } catch (IOException e) {
-            // log silencieux, supprimer la BDD quand même
+            DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(doc.getStoragePath())
+                    .build();
+            s3Client.deleteObject(deleteObjectRequest);
+        } catch (Exception e) {
+            // Log silencieux si l'objet n'existe plus sur Cloudflare, pour supprimer la BDD
         }
 
         documentRepository.delete(doc);
