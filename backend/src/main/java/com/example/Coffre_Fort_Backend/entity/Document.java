@@ -52,14 +52,25 @@ public class Document {
         createdAt = LocalDateTime.now();
     }
 
-    public enum DocumentType {
-        ordonnance, analyse, radiologie, compte_rendu("compte-rendu"), certificat, autre;
+  public enum DocumentType {
+    ordonnance, analyse, radiologie, compte_rendu("compte-rendu"), certificat, autre;
 
-        private final String value;
+    private final String value;
 
-        DocumentType() { this.value = this.name(); }
-        DocumentType(String value) { this.value = value; }
+    DocumentType() { this.value = this.name(); }
+    DocumentType(String value) { this.value = value; }
 
-        public String getValue() { return value; }
+    public String getValue() { return value; }
+
+    public static DocumentType fromString(String text) {
+        if (text == null) return autre;
+        String normalized = text.trim().toLowerCase().replace("-", "_");
+        for (DocumentType b : DocumentType.values()) {
+            if (b.name().equalsIgnoreCase(normalized) || b.value.equalsIgnoreCase(text)) {
+                return b;
+            }
+        }
+        return autre; // fallback au lieu de faire planter le serveur
     }
+}
 }
