@@ -3,7 +3,7 @@ import type { UserRole } from '@/types/user';
 import { useLocation, Link } from 'react-router-dom';
 import {
     LayoutDashboard, Users, FileText, Upload, History, Shield,
-    Activity, Settings, LogOut, Heart, FolderLock, UserCheck, UserCircle
+    Activity, Settings, LogOut, Heart, X, FolderLock, UserCheck, UserCircle
 } from 'lucide-react';
 
 interface NavItem {
@@ -27,7 +27,9 @@ const navItems: NavItem[] = [
     { label: 'Mon profil', path: '/profile', icon: <UserCircle size={18} />, roles: ['admin', 'doctor', 'patient'] },
 ];
 
-const AppSidebar = () => {
+interface AppSidebarProps { open?: boolean; onClose?: () => void; }
+
+const AppSidebar = ({ open = false, onClose }: AppSidebarProps) => {
     const { user, logout } = useAuth();
     const location = useLocation();
 
@@ -36,7 +38,11 @@ const AppSidebar = () => {
     const filteredNav = navItems.filter(item => item.roles.includes(user.role));
 
     return (
-        <aside className="fixed left-0 top-0 z-40 h-screen w-64 bg-sidebar border-r border-sidebar-border flex flex-col" role="navigation" aria-label="Menu principal">
+        <>
+        {open && (
+            <div className="fixed inset-0 z-40 bg-foreground/30 backdrop-blur-sm lg:hidden" onClick={onClose} aria-hidden="true" />
+        )}
+        <aside className={`fixed left-0 top-0 z-50 h-[100dvh] w-72 max-w-[85vw] lg:w-64 lg:z-40 transition-transform duration-300 ${open ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 bg-sidebar border-r border-sidebar-border flex flex-col`} role="navigation" aria-label="Menu principal">
             {/* Logo */}
             <div className="flex items-center gap-3 px-5 py-5 border-b border-sidebar-border">
                 <div className="w-9 h-9 rounded-lg medical-gradient-bg flex items-center justify-center">
@@ -46,6 +52,9 @@ const AppSidebar = () => {
                     <h1 className="text-sm font-display font-bold text-sidebar-accent-foreground">Coffre-fort</h1>
                     <p className="text-xs text-sidebar-foreground/50">Dossier Patient</p>
                 </div>
+                <button type="button" onClick={onClose} className="ml-auto p-1.5 rounded-md text-sidebar-foreground hover:bg-sidebar-accent lg:hidden" aria-label="Fermer le menu">
+                    <X size={18} />
+                </button>
             </div>
 
             {/* Nav */}
@@ -85,6 +94,7 @@ const AppSidebar = () => {
                 </button>
             </div>
         </aside>
+        </>
     );
 };
 

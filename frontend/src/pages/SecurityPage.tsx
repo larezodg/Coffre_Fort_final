@@ -57,7 +57,7 @@ const SecurityPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-display font-bold">Sécurité</h1>
+        <h1 className="text-xl sm:text-2xl font-display font-bold">Sécurité</h1>
         <p className="text-sm text-muted-foreground mt-1">GET /security/events — politiques affichées à titre indicatif</p>
       </div>
 
@@ -77,12 +77,12 @@ const SecurityPage = () => {
         </div>
         <div className="medical-card text-center">
           <Lock size={28} className="text-primary mx-auto mb-2" />
-          <p className="text-2xl font-display font-bold">—</p>
+          <p className="text-xl sm:text-2xl font-display font-bold">—</p>
           <p className="text-xs text-muted-foreground">Documents chiffrés</p>
         </div>
         <div className="medical-card text-center">
           <AlertTriangle size={28} className="text-warning mx-auto mb-2" />
-          <p className="text-2xl font-display font-bold">—</p>
+          <p className="text-xl sm:text-2xl font-display font-bold">—</p>
           <p className="text-xs text-muted-foreground">Menaces (24h)</p>
         </div>
       </div>

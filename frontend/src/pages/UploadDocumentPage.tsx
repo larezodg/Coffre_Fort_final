@@ -85,7 +85,7 @@ onError: (error: any) => {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <h1 className="text-2xl font-display font-bold">Téléverser un document</h1>
+        <h1 className="text-xl sm:text-2xl font-display font-bold">Téléverser un document</h1>
         <p className="text-sm text-muted-foreground mt-1">POST /documents/upload (multipart : file, patientId, type, description)</p>
       </div>
 

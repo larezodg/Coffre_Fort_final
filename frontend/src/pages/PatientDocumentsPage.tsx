@@ -90,7 +90,7 @@ const PatientDocumentsPage = () => {
     <div className="space-y-6">
       <div className="medical-gradient-subtle rounded-xl p-6 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-display font-bold">Mes documents médicaux</h1>
+          <h1 className="text-xl sm:text-2xl font-display font-bold">Mes documents médicaux</h1>
           <p className="text-sm text-muted-foreground mt-1">GET /documents (filtré côté serveur par le patient connecté)</p>
         </div>
         <button type="button" className="medical-btn-secondary text-sm" onClick={() => void refetch()}>

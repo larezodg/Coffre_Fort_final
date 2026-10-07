@@ -36,7 +36,7 @@ function DataTable<T extends Record<string, any>>({
         <div className="medical-card p-0 overflow-hidden">
             {searchable && (
                 <div className="p-4 border-b border-border">
-                    <div className="relative max-w-sm">
+                    <div className="relative w-full sm:max-w-sm">
                         <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                         <input
                             type="search"
@@ -83,7 +83,7 @@ function DataTable<T extends Record<string, any>>({
                 </table>
             </div>
             {totalPages > 1 && (
-                <div className="flex items-center justify-between px-4 py-3 border-t border-border">
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between px-4 py-3 border-t border-border">
                     <span className="text-sm text-muted-foreground">{filtered.length} résultat(s)</span>
                     <div className="flex items-center gap-2">
                         <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} className="p-1.5 rounded-md hover:bg-muted disabled:opacity-30" aria-label="Page précédente">

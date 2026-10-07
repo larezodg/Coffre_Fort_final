@@ -70,7 +70,7 @@ const ProfilePage = () => {
   return (
     <div className="space-y-6 max-w-2xl">
       <div>
-        <h1 className="text-2xl font-display font-bold">Mon profil</h1>
+        <h1 className="text-xl sm:text-2xl font-display font-bold">Mon profil</h1>
         <p className="text-sm text-muted-foreground mt-1">Gérez vos informations personnelles et votre sécurité</p>
       </div>
 

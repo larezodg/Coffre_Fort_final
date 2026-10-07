@@ -126,10 +126,10 @@
     @apply w-full text-sm;
   }
   .medical-table th {
-    @apply text-left text-muted-foreground font-medium py-3 px-4 border-b border-border bg-muted/50;
+    @apply text-left text-muted-foreground font-medium py-3 px-3 sm:px-4 border-b border-border bg-muted/50 whitespace-nowrap;
   }
   .medical-table td {
-    @apply py-3 px-4 border-b border-border;
+    @apply py-3 px-3 sm:px-4 border-b border-border;
   }
   .medical-table tr:hover td {
     @apply bg-muted/30;
