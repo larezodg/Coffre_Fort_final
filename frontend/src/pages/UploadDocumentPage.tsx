@@ -50,9 +50,11 @@ const UploadDocumentPage = () => {
       setSubmitted(true);
       toast.success('Document téléversé');
     },
-    onError: () => {
-      toast.error('Échec du téléversement (POST /documents/upload).');
-    },
+onError: (error: any) => {
+  console.error("Erreur Upload:", error?.response);
+  const msg = error?.response?.data?.message || 'Échec du téléversement';
+  toast.error(msg);
+}
   });
 
   if (submitted) {
