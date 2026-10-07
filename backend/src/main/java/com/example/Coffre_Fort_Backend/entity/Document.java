@@ -24,10 +24,9 @@ public class Document {
     @Column(name = "file_name", nullable = false, length = 255)
     private String fileName;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "document_type", nullable = false,
-            columnDefinition = "ENUM('ordonnance','analyse','radiologie','compte-rendu','certificat','autre')")
-    private DocumentType documentType;
+@Enumerated(EnumType.STRING)
+@Column(name = "document_type", nullable = false)
+private DocumentType documentType;
 
     @Column(columnDefinition = "TEXT")
     private String description;
