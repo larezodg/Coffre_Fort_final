@@ -61,13 +61,12 @@ export const patientsAPI = {
 };
 
 // Documents
+// documentsAPI corrigé
 export const documentsAPI = {
     getAll: (patientId?: string) =>
         api.get<unknown>('/documents', { params: patientId ? { patientId } : {} }),
     upload: (formData: FormData) =>
-        api.post('/documents/upload', formData, {
-            headers: { 'Content-Type': 'multipart/form-data' },
-        }),
+        api.post('/documents/upload', formData), // Axios gère le boundary de multipart/form-data automatiquement
     download: (id: string) =>
         api.get(`/documents/${id}/download`, { responseType: 'blob' }),
     preview: (id: string) =>
