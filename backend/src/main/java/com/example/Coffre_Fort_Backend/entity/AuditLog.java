@@ -1,4 +1,4 @@
-package com.example.Coffre_Fort_Backend.entity;
+package com.example.Coffre_Fort_Backend.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,10 +16,10 @@ public class AuditLog {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(length = 50)
+    @Column(length = 100)
     private String username;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 100)
     private String action;
 
     @Column(length = 500)
@@ -29,7 +29,7 @@ public class AuditLog {
     private String ipAddress;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "ENUM('SUCCESS','FAILURE')")
+    @Column(nullable = false, length = 20)
     private Status status = Status.SUCCESS;
 
     @Column(name = "created_at", nullable = false, updatable = false)
