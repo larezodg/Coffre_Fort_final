@@ -157,9 +157,9 @@ useEffect(() => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-display font-bold">Gestion des utilisateurs</h1>
+          <h1 className="text-xl sm:text-2xl font-display font-bold">Gestion des utilisateurs</h1>
           <p className="text-sm text-muted-foreground mt-1">{users.length} utilisateur(s) — GET /users</p>
         </div>
         <button type="button" className="medical-btn-primary" onClick={() => setShowModal(true)}>
@@ -254,7 +254,7 @@ useEffect(() => {
           />
         </div>
 
-        <div className="flex gap-3 pt-4">
+        <div className="flex flex-col-reverse sm:flex-row gap-3 pt-4">
           <button
             type="button"
             className="medical-btn-secondary flex-1"
@@ -278,7 +278,7 @@ useEffect(() => {
     </Modal>
       <Modal open={showSuppression} onClose={() => {setShowSuppressionModal(false);setSelectedUser(null);}} title="Supprimer l'utilisateur">
         <p className="text-sm text-muted-foreground">Êtes-vous sûr de vouloir supprimer cet utilisateur <strong>{selectedUser?.name}</strong> ? Cette action est irréversible.</p>
-        <div className="flex gap-3 pt-4">
+        <div className="flex flex-col-reverse sm:flex-row gap-3 pt-4">
           <button type="button" className="medical-btn-secondary flex-1" onClick={() => setShowSuppressionModal(false)}>Annuler</button>
           <button type="button" className="medical-btn-destructive flex-1" onClick={() => {
             deleteMutation.mutate(selectedUser.id);
@@ -322,7 +322,7 @@ useEffect(() => {
             <label htmlFor="user-password" className="block text-sm font-medium mb-1.5">Mot de passe initial </label>
             <input id="user-password" type="password" placeholder=" MIN 8 caracters"  className="medical-input" value={createForm.password} onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })} required aria-required="true" />
           </div>
-          <div className="flex gap-3 pt-2">
+          <div className="flex flex-col-reverse sm:flex-row gap-3 pt-2">
             <button type="button" className="medical-btn-secondary flex-1" onClick={() => setShowModal(false)}>Annuler</button>
             <button type="submit" className="medical-btn-primary flex-1" disabled={createMutation.isPending}>
               {createMutation.isPending ? 'Création…' : 'Créer'}

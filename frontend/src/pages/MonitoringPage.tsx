@@ -78,7 +78,7 @@ const MonitoringPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-display font-bold">Surveillance système</h1>
+        <h1 className="text-xl sm:text-2xl font-display font-bold">Surveillance système</h1>
         <p className="text-sm text-muted-foreground mt-1">GET /system/status et GET /system/alerts</p>
       </div>
 

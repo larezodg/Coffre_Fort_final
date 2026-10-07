@@ -49,7 +49,7 @@ const Dashboard = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-display font-bold">Tableau de bord</h1>
+        <h1 className="text-xl sm:text-2xl font-display font-bold">Tableau de bord</h1>
         <p className="text-sm text-muted-foreground mt-1">
           Bienvenue, {user?.name} • {user?.role === 'admin' ? 'Administration' : user?.role === 'doctor' ? 'Espace médecin' : 'Espace patient'}
         </p>
@@ -99,7 +99,7 @@ const Dashboard = () => {
         {user?.role !== 'patient' && (
           <div className="medical-card">
             <h2 className="text-lg font-display font-semibold mb-4">Actions rapides</h2>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <button type="button" className="medical-btn-primary flex-col h-24 rounded-xl" onClick={() => navigate('/upload')}>
                 <Upload size={20} />
                 <span className="text-xs">Téléverser un document</span>

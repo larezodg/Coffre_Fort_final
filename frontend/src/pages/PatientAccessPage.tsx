@@ -50,7 +50,7 @@ const PatientAccessPage = () => {
           <div className="w-14 h-14 rounded-2xl medical-gradient-bg flex items-center justify-center mx-auto mb-4">
             <Heart size={24} className="text-primary-foreground" />
           </div>
-          <h1 className="text-2xl font-display font-bold">Accès Patient</h1>
+          <h1 className="text-xl sm:text-2xl font-display font-bold">Accès Patient</h1>
           <p className="text-sm text-muted-foreground mt-1">Coffre-fort Numérique de Santé</p>
         </div>
 

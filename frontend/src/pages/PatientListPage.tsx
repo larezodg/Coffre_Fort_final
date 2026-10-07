@@ -85,9 +85,9 @@ const PatientListPage = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-display font-bold">Dossiers Patients</h1>
+          <h1 className="text-xl sm:text-2xl font-display font-bold">Dossiers Patients</h1>
           <p className="text-sm text-muted-foreground mt-1">{patients.length} Dossiers Patiens </p>
         </div>
         <button type="button" className="medical-btn-primary" onClick={() => setShowModal(true)}>
@@ -143,7 +143,7 @@ const PatientListPage = () => {
             <label htmlFor="patient-phone" className="block text-sm font-medium mb-1.5">Téléphone</label>
             <input id="patient-phone" type="tel" className="medical-input" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
           </div>
-          <div className="flex gap-3 pt-2">
+          <div className="flex flex-col-reverse sm:flex-row gap-3 pt-2">
             <button type="button" className="medical-btn-secondary flex-1" onClick={() => setShowModal(false)}>Annuler</button>
             <button type="submit" className="medical-btn-primary flex-1" disabled={createMutation.isPending}>
               {createMutation.isPending ? 'Enregistrement…' : 'Enregistrer'}

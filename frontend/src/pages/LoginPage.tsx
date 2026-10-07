@@ -64,30 +64,30 @@ const LoginPage = () => {
           <p className="text-sm opacity-80">Dossier Patient Souverain</p>
         </div>
         <div className="relative z-10">
-          <h2 className="text-3xl font-display font-bold leading-tight mb-4">
+          <h2 className="text-2xl sm:text-3xl font-display font-bold leading-tight mb-4">
             Protégez les données<br />médicales de vos patients
           </h2>
           <p className="text-sm opacity-80 max-w-md">
             Une plateforme sécurisée pour le stockage, le partage et la traçabilité des documents médicaux. Conforme aux normes de santé en vigueur.
           </p>
         </div>
-        <div className="relative z-10 flex gap-8 text-sm">
+        <div className="relative z-10 flex flex-wrap gap-6 sm:gap-8 text-sm">
           <div>
-            <p className="text-2xl font-display font-bold">256-bit</p>
+            <p className="text-xl sm:text-2xl font-display font-bold">256-bit</p>
             <p className="opacity-70">Chiffrement AES</p>
           </div>
           <div>
-            <p className="text-2xl font-display font-bold">100%</p>
+            <p className="text-xl sm:text-2xl font-display font-bold">100%</p>
             <p className="opacity-70">Traçabilité</p>
           </div>
           <div>
-            <p className="text-2xl font-display font-bold">RGPD</p>
+            <p className="text-xl sm:text-2xl font-display font-bold">RGPD</p>
             <p className="opacity-70">Conforme</p>
           </div>
         </div>
       </div>
 
-      <div className="flex-1 flex items-center justify-center p-8 bg-background">
+      <div className="flex-1 flex items-center justify-center p-4 sm:p-8 bg-background">
         <div className="w-full max-w-sm">
           <div className="flex items-center gap-3 mb-8 lg:hidden">
             <Heart size={24} className="text-primary" />
