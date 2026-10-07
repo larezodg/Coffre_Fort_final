@@ -120,7 +120,7 @@ const UploadDocumentPage = () => {
               <option value="ordonnance">Ordonnance</option>
               <option value="analyse">Résultat d&apos;analyse</option>
               <option value="radiologie">Radiologie</option>
-              <option value="compte-rendu">Compte-rendu</option>
+              <option value="compte_rendu">Compte-rendu</option>
               <option value="certificat">Certificat médical</option>
               <option value="autre">Autre</option>
             </select>
