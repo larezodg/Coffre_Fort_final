@@ -1,6 +1,6 @@
 package com.example.Coffre_Fort_Backend.service;
 
-import com.example.Coffre_Fort_Backend.model.AuditLog;
+import com.example.Coffre_Fort_Backend.entity.AuditLog;
 import com.example.Coffre_Fort_Backend.repository.AuditLogRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
