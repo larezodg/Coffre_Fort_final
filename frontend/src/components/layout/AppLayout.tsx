@@ -1,3 +1,4 @@
+import PageMotion from '@/components/shared/PageMotion';
 import { useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import AppSidebar from './AppSidebar';
@@ -15,8 +16,8 @@ const AppLayout = () => {
             <AppSidebar open={menuOpen} onClose={() => setMenuOpen(false)} />
             <div className="lg:ml-64 min-w-0">
                 <TopBar onMenuClick={() => setMenuOpen(true)} />
-                <main className="p-4 sm:p-6 animate-fade-in min-w-0" role="main">
-                    <Outlet />
+                <main className="mx-auto max-w-[1440px] p-4 sm:p-8 min-w-0" role="main">
+                    <PageMotion key={location.pathname}><Outlet /></PageMotion>
                 </main>
             </div>
         </div>
