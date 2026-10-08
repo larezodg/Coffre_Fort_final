@@ -1,4 +1,4 @@
-package com.example.Coffre_Fort_Backend.model;
+package com.example.Coffre_Fort_Backend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
