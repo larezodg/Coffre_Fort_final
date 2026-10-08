@@ -1,3 +1,4 @@
+import PageMotion from '@/components/shared/PageMotion';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -28,7 +29,7 @@ const queryClient = new QueryClient();
 
 const LoginRedirect = () => {
   const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />;
+  return isAuthenticated ? <Navigate to="/dashboard" replace /> : <PageMotion><LoginPage /></PageMotion>;
 };
 
 const PublicHome = () => {
@@ -41,7 +42,7 @@ const PublicHome = () => {
     );
   }
   if (isAuthenticated) return <Navigate to="/dashboard" replace />;
-  return <Index />;
+  return <PageMotion><Index /></PageMotion>;
 };
 
 const App = () => (
@@ -54,8 +55,8 @@ const App = () => (
             <BrowserRouter>
               <Routes>
                 <Route path="/login" element={<LoginRedirect />} />
-                <Route path="/cr" element={<CreateUserPage />} />
-                <Route path="/patient-access" element={<PatientAccessPage />} />
+                <Route path="/cr" element={<PageMotion><CreateUserPage /></PageMotion>} />
+                <Route path="/patient-access" element={<PageMotion><PatientAccessPage /></PageMotion>} />
                 <Route path="/" element={<PublicHome />} />
 
                 <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
@@ -75,7 +76,7 @@ const App = () => (
 
                 </Route>
 
-                <Route path="*" element={<NotFound />} />
+                <Route path="*" element={<PageMotion><NotFound /></PageMotion>} />
               </Routes>
             </BrowserRouter>
           </NotificationProvider>

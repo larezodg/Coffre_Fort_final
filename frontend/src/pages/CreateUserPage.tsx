@@ -1,3 +1,5 @@
+import VaultIdentity from '@/components/shared/VaultIdentity';
+import { Button } from '@/components/ui/button';
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 
 // 1. Interfaces TypeScript correspondant exactement aux DTO Spring Boot
@@ -110,21 +112,22 @@ const CreateUserPage: React.FC = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h2 style={styles.title}>Créer un utilisateur</h2>
-        <p style={styles.subtitle}>Formulaire d'inscription (Accès Admin)</p>
+    <div className="flex min-h-svh items-center justify-center bg-background px-6 py-12">
+      <div className="w-full max-w-sm">
+        <VaultIdentity />
+        <h2 className="mb-2 text-center text-xl font-semibold">Créer un utilisateur</h2>
+        <p className="mb-8 text-center text-sm text-muted-foreground">Formulaire d'inscription (Accès Admin)</p>
 
         {errorMessage && (
-          <div style={{ ...styles.alert, ...styles.alertDanger }}>{errorMessage}</div>
+          <div role="alert" className="mb-4 rounded-lg bg-destructive/10 p-3 text-sm text-destructive">{errorMessage}</div>
         )}
         {successMessage && (
-          <div style={{ ...styles.alert, ...styles.alertSuccess }}>{successMessage}</div>
+          <div role="status" className="mb-4 rounded-lg bg-success/10 p-3 text-sm text-success">{successMessage}</div>
         )}
 
-        <form onSubmit={handleSubmit} style={styles.form}>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Nom complet :</label>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-1.5">
+            <label className="block text-sm font-medium">Nom complet :</label>
             <input
               type="text"
               name="name"
@@ -133,12 +136,12 @@ const CreateUserPage: React.FC = () => {
               placeholder="ex: Dr. Nguemo"
               maxLength={150}
               required
-              style={styles.input}
+              className="medical-input"
             />
           </div>
 
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Nom d'utilisateur (Username) :</label>
+          <div className="space-y-1.5">
+            <label className="block text-sm font-medium">Nom d'utilisateur (Username) :</label>
             <input
               type="text"
               name="username"
@@ -147,12 +150,12 @@ const CreateUserPage: React.FC = () => {
               placeholder="ex: dr.nguemo"
               maxLength={50}
               required
-              style={styles.input}
+              className="medical-input"
             />
           </div>
 
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Adresse Email :</label>
+          <div className="space-y-1.5">
+            <label className="block text-sm font-medium">Adresse Email :</label>
             <input
               type="email"
               name="email"
@@ -161,12 +164,12 @@ const CreateUserPage: React.FC = () => {
               placeholder="ex: nguemo@coffrefort.com"
               maxLength={255}
               required
-              style={styles.input}
+              className="medical-input"
             />
           </div>
 
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Mot de passe (Min. 8 caractères) :</label>
+          <div className="space-y-1.5">
+            <label className="block text-sm font-medium">Mot de passe (Min. 8 caractères) :</label>
             <input
               type="password"
               name="password"
@@ -175,17 +178,17 @@ const CreateUserPage: React.FC = () => {
               placeholder="••••••••"
               minLength={8}
               required
-              style={styles.input}
+              className="medical-input"
             />
           </div>
 
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Rôle :</label>
+          <div className="space-y-1.5">
+            <label className="block text-sm font-medium">Rôle :</label>
             <select
               name="role"
               value={formData.role}
               onChange={handleChange}
-              style={styles.select}
+              className="medical-input"
             >
               <option value="DOCTOR">Médecin (DOCTOR)</option>
               <option value="PATIENT">Patient (PATIENT)</option>
@@ -193,101 +196,13 @@ const CreateUserPage: React.FC = () => {
             </select>
           </div>
 
-          <button type="submit" disabled={loading} style={styles.button}>
+          <Button type="submit" disabled={loading} className="h-12 w-full rounded-xl">
             {loading ? 'Création en cours...' : 'Inscrire l\'utilisateur'}
-          </button>
+          </Button>
         </form>
       </div>
     </div>
   );
-};
-
-// Objets de styles fortement typés avec React.CSSProperties
-const styles: Record<string, React.CSSProperties> = {
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '100vh',
-    backgroundColor: '#f4f6f9',
-    padding: '20px',
-  },
-  card: {
-    backgroundColor: '#ffffff',
-    padding: '30px',
-    borderRadius: '10px',
-    boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-    width: '100%',
-    maxWidth: '480px',
-  },
-  title: {
-    margin: '0 0 5px 0',
-    fontSize: '22px',
-    color: '#1e293b',
-    textAlign: 'center',
-  },
-  subtitle: {
-    margin: '0 0 20px 0',
-    fontSize: '13px',
-    color: '#64748b',
-    textAlign: 'center',
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '15px',
-  },
-  formGroup: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '5px',
-  },
-  label: {
-    fontSize: '13px',
-    fontWeight: '600',
-    color: '#334155',
-  },
-  input: {
-    padding: '10px 12px',
-    fontSize: '14px',
-    borderRadius: '6px',
-    border: '1px solid #cbd5e1',
-    outline: 'none',
-  },
-  select: {
-    padding: '10px 12px',
-    fontSize: '14px',
-    borderRadius: '6px',
-    border: '1px solid #cbd5e1',
-    backgroundColor: '#fff',
-  },
-  button: {
-    marginTop: '10px',
-    padding: '12px',
-    backgroundColor: '#2563eb',
-    color: '#ffffff',
-    border: 'none',
-    borderRadius: '6px',
-    fontSize: '15px',
-    fontWeight: 'bold',
-    cursor: 'pointer',
-  },
-  alert: {
-    padding: '10px 14px',
-    borderRadius: '6px',
-    fontSize: '13px',
-    marginBottom: '15px',
-  },
-  alertDanger: {
-    backgroundColor: '#fef2f2',
-    color: '#991b1b',
-    border: '1px solid #fecaca',
-  },
-  alertSuccess: {
-    backgroundColor: '#f0fdf4',
-    color: '#166534',
-    border: '1px solid #bbf7d0',
-  },
 };
 
 export default CreateUserPage;

@@ -1,3 +1,5 @@
+import VaultIdentity from '@/components/shared/VaultIdentity';
+import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -50,52 +52,11 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen flex" role="main">
-      <div className="hidden lg:flex lg:w-1/2 medical-gradient-bg flex-col justify-between p-12 text-primary-foreground relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-20 w-64 h-64 rounded-full border-2 border-current" />
-          <div className="absolute bottom-32 right-16 w-48 h-48 rounded-full border border-current" />
-          <div className="absolute top-1/2 left-1/3 w-32 h-32 rounded-full border border-current" />
-        </div>
-        <div className="relative z-10">
-          <div className="flex items-center gap-3 mb-2">
-            <Heart size={28} />
-            <span className="text-xl font-display font-bold">Coffre-fort Numérique</span>
-          </div>
-          <p className="text-sm opacity-80">Dossier Patient Souverain</p>
-        </div>
-        <div className="relative z-10">
-          <h2 className="text-2xl sm:text-3xl font-display font-bold leading-tight mb-4">
-            Protégez les données<br />médicales de vos patients
-          </h2>
-          <p className="text-sm opacity-80 max-w-md">
-            Une plateforme sécurisée pour le stockage, le partage et la traçabilité des documents médicaux. Conforme aux normes de santé en vigueur.
-          </p>
-        </div>
-        <div className="relative z-10 flex flex-wrap gap-6 sm:gap-8 text-sm">
-          <div>
-            <p className="text-xl sm:text-2xl font-display font-bold">256-bit</p>
-            <p className="opacity-70">Chiffrement AES</p>
-          </div>
-          <div>
-            <p className="text-xl sm:text-2xl font-display font-bold">100%</p>
-            <p className="opacity-70">Traçabilité</p>
-          </div>
-          <div>
-            <p className="text-xl sm:text-2xl font-display font-bold">RGPD</p>
-            <p className="opacity-70">Conforme</p>
-          </div>
-        </div>
-      </div>
-
       <div className="flex-1 flex items-center justify-center p-4 sm:p-8 bg-background">
         <div className="w-full max-w-sm">
-          <div className="flex items-center gap-3 mb-8 lg:hidden">
-            <Heart size={24} className="text-primary" />
-            <span className="text-lg font-display font-bold">Coffre-fort Numérique</span>
-          </div>
-
-          <h1 className="text-2xl font-display font-bold mb-1">Connexion</h1>
-          <p className="text-sm text-muted-foreground mb-8">Accédez à votre espace sécurisé (API Spring : POST /auth/login)</p>
+          <VaultIdentity />
+          <h1 className="text-xl font-semibold mb-2 text-center">Connexion</h1>
+          <p className="text-sm text-muted-foreground mb-8 text-center">Accédez à votre espace sécurisé</p>
 
           {error && (
             <div className="flex items-start gap-2 p-3 mb-6 rounded-lg bg-destructive/10 text-destructive text-sm" role="alert">
@@ -138,27 +99,25 @@ const LoginPage = () => {
                   autoComplete="current-password"
                   aria-required="true"
                 />
-                <button
-                  type="button"
+                <Button
+                  variant="ghost" size="icon" type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                   aria-label={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
                 >
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                </button>
+                </Button>
               </div>
             </div>
 
-            <button type="submit" disabled={loading} className="medical-btn-primary w-full">
+            <Button type="submit" disabled={loading} className="h-12 w-full rounded-xl">
               {loading ? (
                 <div className="w-4 h-4 rounded-full border-2 border-primary-foreground border-t-transparent animate-spin" />
               ) : 'Se connecter'}
-            </button>
+            </Button>
           </form>
 
-          <p className="mt-8 text-xs text-muted-foreground text-center">
-            Front sur le port 5173 par défaut — API sur <code className="text-foreground">VITE_API_URL</code> (ex. http://localhost:8080/api).
-          </p>
+
         </div>
       </div>
     </div>
